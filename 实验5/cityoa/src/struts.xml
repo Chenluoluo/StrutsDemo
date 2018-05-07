@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.devMode" value="true" />
+
+
+	<package name="default" namespace="/" extends="struts-default">
+
+		<interceptors>
+			<interceptor name="ipinterceptor" class="com.city.oa.interceptor.IPInterceptor">
+			</interceptor>
+			<interceptor name="logininterceptor"
+				class="com.city.oa.interceptor.LoginInterceptor">
+			</interceptor>
+
+			<interceptor-stack name="mystack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="ipinterceptor"></interceptor-ref>
+				<interceptor-ref name="logininterceptor"></interceptor-ref>
+			</interceptor-stack>
+
+		</interceptors>
+
+
+
+
+		<action name="toMain" class="com.city.oa.action.MainPageAction"
+			method="toMain">
+			<result name="success">/main.jsp</result>
+			<result name="login">/login.jsp</result>
+			<result name="error">/error.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+		</action>
+		<action name="login" class="com.city.oa.action.LoginAction"
+			method="login">
+			<result name="success">/main.jsp</result>
+			<result name="login">/login.jsp</result>
+			<result name="error">/error.jsp</result>
+<!-- 			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref> -->
+		</action>
+
+	</package>
+
+
+
+
+
+</struts>
